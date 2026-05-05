@@ -51,6 +51,28 @@ class MLAlgorithmStatus(models.Model):
     created_by = models.CharField(max_length=128) 
     created_at = models.DateTimeField(auto_now_add=True, blank=True) 
     parent_mlalgorithm = models.ForeignKey(MLAlgorithm, on_delete=models.CASCADE, related_name = "status") 
+
+class ABTest(models.Model):
+    '''
+    The ABTest keeps information about A/B tests between ML algorithms.
+
+    Attributes:
+        title: The name of the A/B test.
+        created_by: The name of creator.
+        created_at: The date when test was created.
+        ended_at: The date when test was stopped.
+        summary: The test results summary.
+        parent_mlalgorithm_1: The first ML algorithm in test.
+        parent_mlalgorithm_2: The second ML algorithm in test.
+    '''
+    title = models.CharField(max_length=10000) 
+    created_by = models.CharField(max_length=128) 
+    created_at = models.DateTimeField(auto_now_add=True, blank=True) 
+    ended_at = models.DateTimeField(blank=True, null=True) 
+    summary = models.CharField(max_length=10000, blank=True, null=True) 
+ 
+    parent_mlalgorithm_1 = models.ForeignKey(MLAlgorithm, on_delete=models.CASCADE, related_name="parent_mlalgorithm_1") 
+    parent_mlalgorithm_2 = models.ForeignKey(MLAlgorithm, on_delete=models.CASCADE, related_name="parent_mlalgorithm_2") 
  
 class MLRequest(models.Model): 
     ''' 
